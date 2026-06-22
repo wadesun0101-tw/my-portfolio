@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wade Sun - Lead Healthcare Data Analyst Portfolio & Pipeline Showroom</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.05); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Toast Notification Box (自訂 Toast 提示，不使用 alert) -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-emerald-500 text-slate-950 px-4 py-3 rounded-xl shadow-2xl font-semibold transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <span id="toast-message">Copied to clipboard!</span>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-cyan-400 via-teal-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">WADE SUN</h1>
+                    <p class="text-xs text-cyan-400 font-medium tracking-widest uppercase">Lead Healthcare Data Analyst • Portfolio Showroom</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+                <span class="px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700 font-mono">Company: Molina Healthcare</span>
+                <span class="px-2.5 py-1 rounded-full bg-cyan-950/40 text-cyan-400 border border-cyan-800/60 font-mono">Focus: MedEcon & Pop Health</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Layout -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left Column: Navigation & Core Metas -->
+        <section class="lg:col-span-3 flex flex-col gap-4">
+            <!-- Profile Summary Card -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+                <div class="text-xs text-slate-400 uppercase font-bold tracking-wider mb-2">Expertise Profile</div>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Lead Data Analyst with extensive experience in architecting population health pipelines, medical/pharmacy claims processing, and clinical outcome engines at Molina Healthcare. Expert in Spark, SQL, and Power BI reporting models.
+                </p>
+                <div class="mt-4 pt-4 border-t border-slate-800 flex flex-wrap gap-1.5">
+                    <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">PySpark / SQL</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">CMS CCW Logic</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">Charlson Score</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">TOC Fact Engine</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">0-Day Lag</span>
+                </div>
+            </div>
+
+            <!-- Theme Navigation Menu -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl flex-1">
+                <div class="text-xs text-slate-400 uppercase font-bold tracking-wider px-2 mb-3">Portfolio Projects</div>
+                <nav class="space-y-1.5" id="project-nav">
+                    <!-- Project 1 Button -->
+                    <button onclick="switchTab('theme1')" id="btn-theme1" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center justify-between bg-gradient-to-r from-cyan-950/60 to-slate-900 border border-cyan-800/40 text-cyan-300">
+                        <div class="flex items-center gap-2.5 truncate">
+                            <span class="h-2 w-2 rounded-full bg-cyan-400"></span>
+                            <span class="truncate">1. Core Service Hierarchy</span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <!-- Project 2 Button -->
+                    <button onclick="switchTab('theme2')" id="btn-theme2" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center justify-between text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 border border-transparent">
+                        <div class="flex items-center gap-2.5 truncate">
+                            <span class="h-2 w-2 rounded-full bg-slate-600"></span>
+                            <span class="truncate">2. IP & Readmission Logic</span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <!-- Project 3 Button (NEWLY EXPANDED: CMS CCW Ecosystem) -->
+                    <button onclick="switchTab('theme3')" id="btn-theme3" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center justify-between text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 border border-transparent">
+                        <div class="flex items-center gap-2.5 truncate">
+                            <span class="h-2 w-2 rounded-full bg-slate-600"></span>
+                            <span class="truncate">3. CMS CCW 76+ Conditions</span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <!-- Project 4 Button (NEWLY EXPANDED: Aggregation Master Prep & PBI) -->
+                    <button onclick="switchTab('theme4')" id="btn-theme4" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center justify-between text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 border border-transparent">
+                        <div class="flex items-center gap-2.5 truncate">
+                            <span class="h-2 w-2 rounded-full bg-slate-600"></span>
+                            <span class="truncate">4. Master Aggregation Engine</span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <!-- Project 5 Button -->
+                    <button onclick="switchTab('theme5')" id="btn-theme5" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center justify-between text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 border border-transparent">
+                        <div class="flex items-center gap-2.5 truncate">
+                            <span class="h-2 w-2 rounded-full bg-slate-600"></span>
+                            <span class="truncate">5. ED & Outpatient Models</span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <!-- Project 6 Button (NEW: TOC Engagement & Outcomes Fact) -->
+                    <button onclick="switchTab('theme6')" id="btn-theme6" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center justify-between text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 border border-transparent">
+                        <div class="flex items-center gap-2.5 truncate">
+                            <span class="h-2 w-2 rounded-full bg-slate-600"></span>
+                            <span class="truncate">6. TOC & Weekly Explosion</span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Right Column: Interactive Project Showcase -->
+        <section class="lg:col-span-9 flex flex-col gap-6">
+            
+            <!-- Project Theme Content Container -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl relative min-h-[550px]">
+                
+                <!-- THEME 1: Core Service Hierarchy (CSH) & Taxonomy -->
+                <div id="content-theme1" class="tab-content block space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400 font-mono">Theme 01 • Enterprise Strategy & Taxonomy</span>
+                            <h2 class="text-2xl font-bold mt-1 text-slate-100">Core Service Hierarchy (CSH) Resolution Engine</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 rounded bg-slate-800 text-xs border border-slate-700 text-slate-300">Milliman Alternatives</span>
+                            <span class="px-3 py-1 rounded bg-indigo-950 text-xs border border-indigo-800 text-indigo-300">Architecture</span>
+                        </div>
+                    </div>
+
+                    <!-- Problem & Target Design -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-rose-950/20 border border-rose-900/30 p-4 rounded-xl">
+                            <h3 class="text-sm font-semibold text-rose-400 flex items-center gap-2 mb-2">
+                                <span class="h-2 w-2 rounded-full bg-rose-500"></span>
+                                Milliman Systemic Failure Areas
+                            </h3>
+                            <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+                                <li><strong class="text-slate-100">Event Integrity:</strong> Stays collapse incorrectly, shifting dates to wrong months.</li>
+                                <li><strong class="text-slate-100">Granularity Mismatch:</strong> Overloaded "Util" definition (conflating claims, visits, and days).</li>
+                                <li><strong class="text-slate-100">Clinical Misclassification:</strong> Behavioral Health & Maternity antepartum buried in "OtherOP".</li>
+                            </ul>
+                        </div>
+                        <div class="bg-emerald-950/20 border border-emerald-900/30 p-4 rounded-xl">
+                            <h3 class="text-sm font-semibold text-emerald-400 flex items-center gap-2 mb-2">
+                                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                                Multi-Dimensional CSH Design
+                            </h3>
+                            <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+                                <li><strong class="text-slate-100">Service Settings:</strong> Categorizes into Inpatient, Outpatient, Professional, Rx.</li>
+                                <li><strong class="text-slate-100">Clinical Domains:</strong> Maps directly to Med/Surg, Maternity, Behavioral Health, Rehab.</li>
+                                <li><strong class="text-slate-100">Treatment Types:</strong> Standardizes counting rules for Admits, Visits, Days, Hours.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Visual Interactive Hierarchy Tree Chart -->
+                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-4">
+                        <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Rule Precedence Hierarchy Tree Map</div>
+                        <div class="flex flex-col space-y-3 relative">
+                            <!-- Visual flowchart blocks -->
+                            <div class="flex items-center justify-between bg-slate-900 border border-slate-800 p-3 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="px-2.5 py-1 rounded bg-cyan-950/60 text-cyan-400 font-mono text-xs font-bold border border-cyan-800/40">Step 1</span>
+                                    <span class="text-xs font-semibold text-slate-200">Event Stay Grouping Logic</span>
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-mono">Consolidates Continuous Stays / Visits</span>
+                            </div>
+                            <div class="flex items-center justify-between bg-slate-900 border border-slate-800 p-3 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="px-2.5 py-1 rounded bg-cyan-950/60 text-cyan-400 font-mono text-xs font-bold border border-cyan-800/40">Step 2</span>
+                                    <span class="text-xs font-semibold text-slate-200">UB Bill Type Assessment</span>
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-mono">Identifies Facility Setting (Starts with 011x, 021x, etc.)</span>
+                            </div>
+                            <div class="flex items-center justify-between bg-slate-900 border border-slate-800 p-3 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="px-2.5 py-1 rounded bg-cyan-950/60 text-cyan-400 font-mono text-xs font-bold border border-cyan-800/40">Step 3</span>
+                                    <span class="text-xs font-semibold text-slate-200">Revenue Code Carve-outs</span>
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-mono">Splits Room/Board, Dialysis, Chemo, Therapy</span>
+                            </div>
+                            <div class="flex items-center justify-between bg-slate-900 border border-slate-800 p-3 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="px-2.5 py-1 rounded bg-cyan-950/60 text-cyan-400 font-mono text-xs font-bold border border-cyan-800/40">Step 4</span>
+                                    <span class="text-xs font-semibold text-slate-200">Procedure CPT/HCPCS Codes</span>
+                                    <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-mono">Highest Clinical Weight</span>
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-mono">Discovers Specific Therapeutic Intent</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- THEME 2: Inpatient (IP) Admissions & Readmissions Logic -->
+                <div id="content-theme2" class="tab-content hidden space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400 font-mono">Theme 02 • Core Clinical Operations</span>
+                            <h2 class="text-2xl font-bold mt-1 text-slate-100">Inpatient Admissions & 30-Day Readmission Engine</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 rounded bg-slate-800 text-xs border border-slate-700 text-slate-300">MedSurg / Behavioral Health</span>
+                            <span class="px-3 py-1 rounded bg-cyan-950 text-xs border border-cyan-800 text-cyan-300">Pipeline Engine</span>
+                        </div>
+                    </div>
+
+                    <!-- Inpatient Logic Flow - Dynamic SVGs / HTML Visual timelines -->
+                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-4">
+                        <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Visual 30-Day Readmission Tracker Timeline</div>
+                        <div class="relative py-8">
+                            <div class="absolute h-0.5 bg-slate-800 w-full top-1/2 left-0 -translate-y-1/2"></div>
+                            <!-- Core milestones -->
+                            <div class="relative flex justify-between">
+                                <div class="flex flex-col items-center relative z-10">
+                                    <div class="h-6 w-6 rounded-full bg-cyan-400 border-4 border-slate-950 flex items-center justify-center shadow"></div>
+                                    <span class="text-[10px] font-bold text-slate-300 mt-2">Index Admit</span>
+                                    <span class="text-[8px] text-slate-500">Facility Admission</span>
+                                </div>
+                                <div class="flex flex-col items-center relative z-10">
+                                    <div class="h-6 w-6 rounded-full bg-emerald-400 border-4 border-slate-950 flex items-center justify-center shadow"></div>
+                                    <span class="text-[10px] font-bold text-slate-300 mt-2">Discharge (Day 0)</span>
+                                    <span class="text-[8px] text-slate-500">Exclude Left AMA, Expired, Hospice</span>
+                                </div>
+                                <div class="flex flex-col items-center relative z-10">
+                                    <div class="h-6 w-6 rounded-full bg-indigo-500 border-4 border-slate-950 flex items-center justify-center shadow animate-pulse-slow"></div>
+                                    <span class="text-[10px] font-bold text-slate-300 mt-2">Outcome Window</span>
+                                    <span class="text-[8px] text-slate-500">1 to 30 Days Look-Forward</span>
+                                </div>
+                                <div class="flex flex-col items-center relative z-10">
+                                    <div class="h-6 w-6 rounded-full bg-rose-500 border-4 border-slate-950 flex items-center justify-center shadow"></div>
+                                    <span class="text-[10px] font-bold text-slate-300 mt-2">Readmit (Day &le; 30)</span>
+                                    <span class="text-[8px] text-slate-500">Flagged: `is_readmit = true`</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Exclusion Filter Logic</h4>
+                            <p class="text-xs text-slate-400">
+                                Excludes discharge disposition codes representing non-index scenarios (such as left against medical advice, expired, hospice, or psychiatric planned transitions) to safeguard metrics against analytical noise.
+                            </p>
+                        </div>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Combined Span Rules</h4>
+                            <p class="text-xs text-slate-400">
+                                Automatically merges sequential claims matching transfer codes, same-date discharge-admission pairings, and adjacent back-to-back records into a single continuous stay.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- THEME 3: CMS CCW 76+ Chronic Conditions & Pipeline Ecosystem -->
+                <div id="content-theme3" class="tab-content hidden space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400 font-mono">Theme 03 • Chronic Conditions Warehouse</span>
+                            <h2 class="text-2xl font-bold mt-1 text-slate-100">CMS CCW 76+ Condition Profiling Ecosystem</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 rounded bg-slate-800 text-xs border border-slate-700 text-slate-300">19 MHSA / 57+ PH Conditions</span>
+                            <span class="px-3 py-1 rounded bg-indigo-950 text-xs border border-indigo-800 text-indigo-300">0-Day vs 90-Day Lag</span>
+                        </div>
+                    </div>
+
+                    <!-- Pipeline Data Management Flow (FROM CCW Data Manage Plan & Core Pipeline) -->
+                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-4">
+                        <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">CCW Enterprise Data Pipeline Flow (0-Day & 90-Day Lag)</div>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+                            <div class="bg-slate-900 border border-slate-800 p-3 rounded-lg flex flex-col justify-between">
+                                <span class="text-cyan-400 font-bold block mb-1">1. Raw Input Tables</span>
+                                <span class="text-slate-400 text-[11px] mb-2">Extracts claims & enrollment records weekly.</span>
+                                <span class="text-[10px] text-slate-300 font-mono bg-slate-950 px-2 py-0.5 rounded border border-slate-800">mfred_claim, enterprise_db</span>
+                            </div>
+                            <div class="bg-slate-900 border border-slate-800 p-3 rounded-lg flex flex-col justify-between">
+                                <span class="text-cyan-400 font-bold block mb-1">2. Staging Condition Flags</span>
+                                <span class="text-slate-400 text-[11px] mb-2">Classifies claims using parsed diagnoses (periods stripped).</span>
+                                <span class="text-[10px] text-slate-300 font-mono bg-slate-950 px-2 py-0.5 rounded border border-slate-800">ph_ccw_mhsa, ph_ccw_ph</span>
+                            </div>
+                            <div class="bg-slate-900 border border-slate-800 p-3 rounded-lg flex flex-col justify-between">
+                                <span class="text-cyan-400 font-bold block mb-1">3. Master Combine Delta</span>
+                                <span class="text-slate-400 text-[11px] mb-2">Combines conditions, Charlson comorbidity & program flags.</span>
+                                <span class="text-[10px] text-slate-300 font-mono bg-slate-950 px-2 py-0.5 rounded border border-slate-800">ph_ccw_combined</span>
+                            </div>
+                            <div class="bg-slate-900 border border-slate-800 p-3 rounded-lg flex flex-col justify-between">
+                                <span class="text-cyan-400 font-bold block mb-1">4. Aggregated Summaries</span>
+                                <span class="text-slate-400 text-[11px] mb-2">Consolidates metrics for Power BI visual reporting.</span>
+                                <span class="text-[10px] text-slate-300 font-mono bg-slate-950 px-2 py-0.5 rounded border border-slate-800">ph_ccw_dx_summary</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive CCW Rule Inspector -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+                        <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Interactive CCW Condition & Criteria Inspector</div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div class="bg-slate-900 p-3 rounded border border-slate-850 cursor-pointer hover:border-cyan-500/50 transition-all" onclick="showCcwDetail('A')">
+                                <div class="text-cyan-400 font-bold text-xs">Criteria Type A (Physical Health)</div>
+                                <p class="text-[11px] text-slate-400 mt-1">1 IP/SNF/HHA claim OR 2 Outpatient/Carrier claims (2-Year lookback). Primary PH rule.</p>
+                            </div>
+                            <div class="bg-slate-900 p-3 rounded border border-slate-850 cursor-pointer hover:border-cyan-500/50 transition-all" onclick="showCcwDetail('B')">
+                                <div class="text-cyan-400 font-bold text-xs">Criteria Type B (MHSA)</div>
+                                <p class="text-[11px] text-slate-400 mt-1">1 IP claim OR 2 other non-drug claims of any service type (2-Year lookback).</p>
+                            </div>
+                            <div class="bg-slate-900 p-3 rounded border border-slate-850 cursor-pointer hover:border-cyan-500/50 transition-all" onclick="showCcwDetail('F')">
+                                <div class="text-cyan-400 font-bold text-xs">Criteria Type F (Special Multi-Tier)</div>
+                                <p class="text-[11px] text-slate-400 mt-1">Opioid Use Disorder composite tiers (OUD1-OUD4), or Sickle Cell (3+ claims, 5-Year lookback).</p>
+                            </div>
+                        </div>
+                        <div id="ccw-criteria-box" class="bg-slate-900 p-3.5 rounded border border-slate-800 text-xs text-slate-300 font-mono">
+                            -- Click one of the criteria categories above to inspect code variables and exclusions --
+                        </div>
+                    </div>
+                </div>
+
+                <!-- THEME 4: Population Health Aggregation Engine (Aggregation Prep & PBI) -->
+                <div id="content-theme4" class="tab-content hidden space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400 font-mono">Theme 04 • Analytical Merging & Aggregation</span>
+                            <h2 class="text-2xl font-bold mt-1 text-slate-100">Master Aggregation Prep & PBI Compile Engine</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 rounded bg-slate-800 text-xs border border-slate-700 text-slate-300">22-Step Data Enrichment</span>
+                            <span class="px-3 py-1 rounded bg-indigo-950 text-xs border border-indigo-800 text-indigo-300">Trend & Spend Analysis</span>
+                        </div>
+                    </div>
+
+                    <!-- Enrichment Progress Steps -->
+                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-4">
+                        <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Step-by-Step Data Enrichment & Aggregation Architecture</div>
+                        
+                        <!-- Visual Step Progress Map -->
+                        <div class="grid grid-cols-2 md:grid-cols-6 gap-3 text-center text-xs">
+                            <div class="bg-slate-900 p-2.5 rounded border border-cyan-800/40 text-cyan-300">
+                                <span class="font-bold block text-[10px]">Step 01-03</span>
+                                <span>Merge MHSA/PH & Charlson Spine</span>
+                            </div>
+                            <div class="bg-slate-900 p-2.5 rounded border border-slate-800 text-slate-400">
+                                <span class="font-bold block text-[10px]">Step 04-10</span>
+                                <span>Clinical Groupings & Severity Tiers</span>
+                            </div>
+                            <div class="bg-slate-900 p-2.5 rounded border border-slate-800 text-slate-400">
+                                <span class="font-bold block text-[10px]">Step 11-15</span>
+                                <span>Race, AIDS, iPro & Specialist Flags</span>
+                            </div>
+                            <div class="bg-slate-900 p-2.5 rounded border border-slate-800 text-slate-400">
+                                <span class="font-bold block text-[10px]">Step 16-21</span>
+                                <span>Maternity, TOC & CogImpair Assmt</span>
+                            </div>
+                            <div class="bg-slate-900 p-2.5 rounded border border-slate-800 text-slate-400">
+                                <span class="font-bold block text-[10px]">Step 22-23</span>
+                                <span>Final Combined View & Delta Write</span>
+                            </div>
+                            <div class="bg-slate-900 p-2.5 rounded border border-indigo-800/40 text-indigo-300">
+                                <span class="font-bold block text-[10px]">Aggregation</span>
+                                <span>Compile Trends & PBI summary</span>
+                            </div>
+                        </div>
+
+                        <!-- Data Merging Tree Visualization -->
+                        <div class="bg-slate-900 border border-slate-850 p-4 rounded-xl flex flex-col md:flex-row items-center justify-around gap-4">
+                            <div class="space-y-1.5 text-center text-[11px] font-mono w-full md:w-1/4">
+                                <div class="bg-slate-950 p-2 rounded border border-slate-800 text-teal-400">ph_ccw_mhsa<br><span class="text-[8px] text-slate-500">(19 MHSA Flags)</span></div>
+                                <div class="bg-slate-950 p-2 rounded border border-slate-800 text-cyan-400">ph_ccw_ph<br><span class="text-[8px] text-slate-500">(55+ PH Flags)</span></div>
+                                <div class="bg-slate-950 p-2 rounded border border-slate-800 text-indigo-400">ph_ccw_charlson<br><span class="text-[8px] text-slate-500">(Enrollment Spine)</span></div>
+                            </div>
+                            <div class="text-slate-600 text-2xl hidden md:block">&rarr;</div>
+                            <div class="bg-slate-950 p-4 rounded border-2 border-indigo-800/40 text-center w-full md:w-2/5 font-mono space-y-2">
+                                <div class="text-xs font-bold text-slate-200">Enriched Member Master Matrix</div>
+                                <div class="text-[10px] text-indigo-400">ph_ccw_combined_{period}</div>
+                                <div class="text-[9px] text-slate-400 border-t border-slate-800 pt-2 grid grid-cols-2 gap-1 text-left">
+                                    <div>• iPro Risk Strata</div>
+                                    <div>• Specialist Visits</div>
+                                    <div>• TOC Program Flags</div>
+                                    <div>• Pregnancy Matrices</div>
+                                </div>
+                            </div>
+                            <div class="text-slate-600 text-2xl hidden md:block">&rarr;</div>
+                            <div class="bg-slate-900 border border-slate-800 p-3 rounded text-center w-full md:w-1/4 font-mono text-[10px]">
+                                <div class="font-bold text-emerald-400">PBI Outputs</div>
+                                <span class="text-slate-400">ph_ccw_dx_summary_current_period</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- THEME 5: ED Care & Outpatient Utilization Models -->
+                <div id="content-theme5" class="tab-content hidden space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400 font-mono">Theme 05 • Utilization Review</span>
+                            <h2 class="text-2xl font-bold mt-1 text-slate-100">ED Avoidability & Telehealth Utilization Models</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 rounded bg-slate-800 text-xs border border-slate-700 text-slate-300">Medicaid & Marketplace</span>
+                            <span class="px-3 py-1 rounded bg-cyan-950 text-xs border border-cyan-800 text-cyan-300">Utilization Insights</span>
+                        </div>
+                    </div>
+
+                    <!-- ED Claims Routing Logic Diagram -->
+                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-4">
+                        <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Claims Processing Route Flowchart</div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+                            <div class="bg-slate-900 p-3.5 rounded border border-slate-850 flex flex-col justify-between">
+                                <div>
+                                    <span class="text-rose-400 font-bold block mb-1">Facility Claims (UB-04)</span>
+                                    <span class="text-slate-400 text-[11px]">Includes room & board and revenue codes.</span>
+                                </div>
+                                <span class="text-[10px] text-slate-300 mt-2 bg-slate-950 p-1.5 rounded text-center border border-slate-800">Revenue: '0450', '0451', '0452', '0981'</span>
+                            </div>
+                            <div class="bg-slate-900 p-3.5 rounded border border-slate-850 flex flex-col justify-between">
+                                <div>
+                                    <span class="text-cyan-400 font-bold block mb-1">Professional Claims (CMS-1500)</span>
+                                    <span class="text-slate-400 text-[11px]">Processes procedure CPT codes.</span>
+                                </div>
+                                <span class="text-[10px] text-slate-300 mt-2 bg-slate-950 p-1.5 rounded text-center border border-slate-800">CPT: '99281' - '99285' | POS 23</span>
+                            </div>
+                            <div class="bg-slate-900 p-3.5 rounded border border-slate-850 flex flex-col justify-between">
+                                <div>
+                                    <span class="text-indigo-400 font-bold block mb-1">iPro Map Classification</span>
+                                    <span class="text-slate-400 text-[11px]">Determines whether a visit was avoidable.</span>
+                                </div>
+                                <span class="text-[10px] text-slate-300 mt-2 bg-slate-950 p-1.5 rounded text-center border border-slate-800">Categories 4 to 9: Avoidable ED</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- THEME 6: TOC Engagement & Outcomes Fact Engine (NEWLY ADDED) -->
+                <div id="content-theme6" class="tab-content hidden space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400 font-mono">Theme 06 • Transitions of Care & CM Analytics</span>
+                            <h2 class="text-2xl font-bold mt-1 text-slate-100">Transitions of Care (TOC) Outcomes & Weekly Explosion Fact Engine</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 rounded bg-slate-800 text-xs border border-slate-700 text-slate-300">CM Outcomes</span>
+                            <span class="px-3 py-1 rounded bg-cyan-950 text-xs border border-cyan-800 text-cyan-300">Weekly Fact Explosion</span>
+                        </div>
+                    </div>
+
+                    <!-- TOC Outcomes Pipeline Flow & Timelines -->
+                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-4">
+                        <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">TOC Discharge-Outcome Window & Program Timing Pipeline</div>
+                        
+                        <!-- Timeline representation -->
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-3">
+                            <div class="flex justify-between items-center text-xs font-semibold">
+                                <span class="text-cyan-400 font-bold flex items-center gap-1.5">
+                                    <span class="h-2 w-2 rounded-full bg-cyan-400"></span>
+                                    Discharge Normalization
+                                </span>
+                                <span class="text-emerald-400 font-bold flex items-center gap-1.5">
+                                    <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+                                    30-Day Run-out Follow-up
+                                </span>
+                                <span class="text-indigo-400 font-bold flex items-center gap-1.5">
+                                    <span class="h-2 w-2 rounded-full bg-indigo-400"></span>
+                                    Weekly Explosion
+                                </span>
+                            </div>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Conditionally alters discharge dates for facilities (SNF, Rehab, LTAC) to one day prior to admission authorization date. Validates enrollment continuity across observation windows (flags gaps using <code class="text-cyan-400">memberTermedTruncated = 1</code>).
+                            </p>
+                            <div class="border-t border-slate-800/80 pt-2.5 flex flex-wrap gap-2 text-[10px] font-mono text-slate-300">
+                                <span class="bg-slate-950 border border-slate-850 px-2.5 py-1 rounded">Base View: `pdBase`</span>
+                                <span class="bg-slate-950 border border-slate-850 px-2.5 py-1 rounded">Enhanced View: `pdEnhanced`</span>
+                                <span class="bg-slate-950 border border-slate-850 px-2.5 py-1 rounded">Weekly Fact Grain: `ph_cm_outcomes_return_file_weekly`</span>
+                            </div>
+                        </div>
+
+                        <!-- Weekly Explosion Flow Graphic -->
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 text-xs">
+                            <div class="font-bold text-slate-300 mb-2 font-mono text-xs">Weekly Longitudinal Explosion Engine</div>
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-center text-[11px] font-mono">
+                                <div class="bg-slate-950 border border-slate-800 p-2.5 rounded">
+                                    <div class="text-cyan-400 font-bold text-xs">Member Record</div>
+                                    <p class="text-slate-500 text-[9px] mt-1">Single timeline span (Start &rarr; End)</p>
+                                </div>
+                                <div class="text-slate-500 font-bold py-2 hidden md:block">&rarr;</div>
+                                <div class="bg-slate-950 border border-slate-800 p-2.5 rounded col-span-2">
+                                    <div class="text-indigo-400 font-bold text-xs">ISO Week Explosion</div>
+                                    <p class="text-slate-400 text-[9px] mt-1">Record duplicated per ISO week within the active timeline. Handles overlapping spans by selecting representative records.</p>
+                                </div>
+                                <div class="text-slate-500 font-bold py-2 hidden md:block">&rarr;</div>
+                                <div class="bg-slate-950 border border-slate-800 p-2.5 rounded">
+                                    <div class="text-emerald-400 font-bold text-xs">Weekly Fact File</div>
+                                    <p class="text-slate-500 text-[9px] mt-1">Ready for Power BI weekly dashboards</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Logic Sandbox Segment -->
+                <div class="mt-8 pt-6 border-t border-slate-800 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="p-1 rounded bg-cyan-950 text-cyan-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                                </svg>
+                            </span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Project Sourcing Logic & Code Sandbox</span>
+                        </div>
+                        <span class="text-[10px] text-slate-400 font-mono">SQL Standard (ANSI/Spark)</span>
+                    </div>
+
+                    <!-- SQL Sandbox Textareas based on selected theme -->
+                    <div id="sandbox-container" class="bg-slate-950 p-4 rounded-xl border border-slate-800 relative">
+                        <button onclick="copyCurrentSQL()" class="absolute top-3 right-3 bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 px-2.5 py-1 rounded border border-slate-700 transition flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-5 10l2 2 4-4" />
+                            </svg>
+                            Copy SQL
+                        </button>
+                        <pre class="overflow-x-auto text-xs text-emerald-400 font-mono whitespace-pre" id="sql-display-code">
+-- Dynamic Code Loading...
+                        </pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Resume Bullets Builder (Extremely valuable tool for Wade Sun's career progression) -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="p-1 rounded bg-indigo-950 text-indigo-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </span>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-200">Interactive Career & Resume Bullet Generator</h3>
+                            <p class="text-xs text-slate-400">STAR Method (Situation, Task, Action, Result) descriptions for interviews and your CV.</p>
+                        </div>
+                    </div>
+                    <button onclick="copyResumeBullet()" class="bg-indigo-600 hover:bg-indigo-500 text-xs text-white font-semibold px-3 py-1.5 rounded-xl transition flex items-center gap-1 shadow-lg shadow-indigo-600/20">
+                        Copy Description
+                    </button>
+                </div>
+                <div class="bg-slate-950 p-4 rounded-xl border border-indigo-950/40">
+                    <p class="text-xs text-slate-300 italic leading-relaxed" id="resume-bullet-text">
+                        -- Select a theme on the left to load its clinical STAR statement --
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-slate-800 bg-slate-900/60 p-4 text-center text-xs text-slate-500 font-mono">
+        Lead Data Analyst Portfolio Framework • Constructed in 2026 for Wade Sun (Molina Healthcare)
+    </footer>
+
+    <!-- Interactive JS Page Actions -->
+    <script>
+        // Data containing SQL code fragments and professional Resume Bullet points for each Theme (用繁體中文撰寫程式碼註解)
+        const projectData = {
+            theme1: {
+                sql: `
+SELECT 
+    claim_id,
+    member_id,
+    -- Service Setting
+    CASE 
+        WHEN ub_bill_type LIKE '011%' OR ub_bill_type LIKE '021%' OR ub_bill_type LIKE '082%' 
+             OR (ub_bill_type LIKE '012%' AND amt_paid > 0) THEN 'Inpatient'
+        WHEN ub_bill_type LIKE '013%' OR ub_bill_type LIKE '014%' THEN 'Outpatient'
+        WHEN form_type = 'H' THEN 'Professional'
+        WHEN claim_id LIKE '%P' OR claim_id LIKE '%X' THEN 'Prescription Drug'
+        WHEN ub_bill_type LIKE '022%' OR (ub_bill_type LIKE '012%' AND amt_paid <= 0) THEN 'Ancillary'
+        ELSE 'Other'
+    END AS cos_setting,
+    -- Category Level 2 Carve-outs
+    CASE 
+        WHEN icd_prefix IN ('F20', 'F39') AND discharge_status = '93' THEN 'IP - MH Hospital'
+        WHEN icd_prefix IN ('F20', 'F39') THEN 'IP - MH Residential'
+        WHEN ms_drg IN ('767', '768') THEN 'IP - Vaginal Delivery'
+        WHEN ms_drg IN ('765', '766') THEN 'IP - C-Section'
+        ELSE 'IP - Medical/Surgical'
+    END AS cos_level_2
+FROM enterprise_db.claim_line
+WHERE year_mo_admit >= '202301';`,
+                bullet: "Designed Molina's Target-State Core Service Hierarchy (CSH) roadmap to replace legacy black-box Milliman models; established a robust 5-tiered precedence resolution logic (Event > Setting > Clinical Domain > CPT) that eliminated misclassification of high-cost Behavioral Health and Maternity cohorts across Medicaid and Marketplace claims."
+            },
+            theme2: {
+                sql: `
+WITH base_admissions AS (
+    SELECT 
+        member_id, admission_date, end_date, discharge_status,
+        CASE WHEN discharge_status NOT IN ('07', '20', '30', '50', '82', '83', '85', '86', '90', '91', '93', '94') 
+             THEN 1 ELSE 0 END AS index_admit
+    FROM eim_medecon_report_db.ph_case_qnxt_admits_med_surg_bh_only
+),
+readmissions AS (
+    SELECT 
+        curr.member_id,
+        curr.admission_date,
+        curr.end_date,
+        prev.end_date AS prev_discharge_date,
+        DATEDIFF(day, prev.end_date, curr.admission_date) AS days_to_readmit
+    FROM base_admissions curr
+    INNER JOIN base_admissions prev 
+       ON curr.member_id = prev.member_id 
+      AND prev.index_admit = 1
+      AND curr.admission_date > prev.end_date
+      AND DATEDIFF(day, prev.end_date, curr.admission_date) BETWEEN 1 AND 30
+)
+SELECT * FROM readmissions;`,
+                bullet: "Developed Molina's Inpatient & 30-Day Readmission analytical pipeline, creating advanced SQL/Spark logic to collapse clinical fragments, transfers, and same-day back-to-back admissions; successfully isolated index exclusions (e.g. AMA, planned psychiatric transfers) to establish pristine quality metrics for MedSurg and BH hospitalizations."
+            },
+            theme3: {
+                sql: `
+WITH raw_claims AS (
+    SELECT 
+        member_id, claim_id, service_date,
+        regexp_replace(diagnosis_code, '[., ]', '') AS clean_dx,
+        procedure_code
+    FROM enterprise_db.claim_line
+),
+ccw_flags AS (
+    SELECT 
+        member_id,
+        MAX(CASE WHEN clean_dx LIKE 'F11%' THEN 1 ELSE 0 END) AS oud2_dx_flag,
+        MAX(CASE WHEN clean_dx LIKE 'F11%' AND claim_type IN ('IP', 'ER') THEN 1 ELSE 0 END) AS oud3_hosp_flag,
+        MAX(CASE WHEN ndc_code IN ('124960000', '657570000') THEN 1 ELSE 0 END) AS oud4_mat_flag
+    FROM raw_claims
+    GROUP BY member_id
+)
+SELECT 
+    member_id, oud2_dx_flag, oud3_hosp_flag, oud4_mat_flag,
+    (case when oud2_dx_flag = 1 or oud3_hosp_flag = 1 or oud4_mat_flag = 1 then 1 else 0 end) AS ccw_criteria_oud1
+FROM ccw_flags;`,
+                bullet: "Built a robust ICD-10/PCS code-parsing framework for 76+ chronic conditions; deployed multi-tier composite engines for Opioid Use Disorder (OUD1-OUD4) and specialized clinical validation cohorts (AIDS, HIV, benign prostatic hyperplasia, and stroke exclusions)."
+            },
+            theme4: {
+                sql: `
+SELECT 
+    ch.pat_id,
+    ch.part_state,
+    CASE WHEN ch.part_state = 'NY_SWH' THEN 'NY (SWH)' ELSE ch.part_state END AS part_state2,
+    GREATEST(COALESCE(ph.ccw2YrCriteriaMetPh, 0), COALESCE(mh.id_flag, 0), COALESCE(mh.od_flag, 0)) AS ccw2YrCriteriaMetPh,
+    CASE 
+        WHEN COALESCE(mh.ccw2YrCriteriaMetMhsa, 0) > 0 AND COALESCE(ph.ccw2YrCriteriaMetPh, 0) < 1 THEN 'BH Only'
+        WHEN COALESCE(mh.ccw2YrCriteriaMetMhsa, 0) < 1 AND COALESCE(ph.ccw2YrCriteriaMetPh, 0) > 0 THEN 'PH Only'
+        WHEN COALESCE(mh.ccw2YrCriteriaMetMhsa, 0) > 0 AND COALESCE(ph.ccw2YrCriteriaMetPh, 0) > 0 THEN 'BH and PH'
+        ELSE 'Healthy'
+    END AS healthCategory
+FROM eim_medecon_report_db.ph_ccw_charlson_r12_stage ch
+LEFT JOIN eim_medecon_report_db.ph_ccw_mhsa_stage mh ON ch.pat_id = mh.pat_id AND ch.part_state = mh.part_state
+LEFT JOIN eim_medecon_report_db.ph_ccw_ph_stage ph ON ch.pat_id = ph.pat_id AND ch.part_state = ph.part_state;`,
+                bullet: "Architected the 22-step analytical aggregation prep engine (`ccwAggregationPrep`) compiling MHSA, Physical Health, and Charlson comorbidity spines; streamlined multi-market sub-state breakouts (e.g. HARP, Cigna, MCC) and appended supplemental layers including Transitions of Care (TOC) and cognitive screenings."
+            },
+            theme5: {
+                sql: `-- [主題五] ED Avoidability & Telehealth Outpatient Models
+SELECT 
+    part_state,
+    lobPrimary,
+    CASE 
+        WHEN IPRO_AVOIDABLE_ED_CATEGORY LIKE '4%' THEN 'Potentially Avoidable & Not ACS'
+        WHEN IPRO_AVOIDABLE_ED_CATEGORY LIKE '5%' THEN 'Potentially Avoidable & ACS'
+        WHEN IPRO_AVOIDABLE_ED_CATEGORY LIKE '6%' THEN 'Potentially Avoidable & Unknown ACS'
+        WHEN IPRO_AVOIDABLE_ED_CATEGORY IN ('1','2','3') THEN 'Not Avoidable'
+        ELSE 'Undetermined'
+    END AS avoidable_segment,
+    COUNT(DISTINCT member_id || dos) AS avoidable_visit_events
+FROM eim_medecon_report_db.ph_case_qnxt_ed
+WHERE year_mo BETWEEN '202401' AND '202412'
+  AND IPRO_AVOIDABLE_ED_CATEGORY NOT IN ('VOID')
+GROUP BY 1, 2, 3;`,
+                bullet: "Constructed an automated Emergency Department and Telehealth utilization model categorizing avoidable visits via iPro standards and McKensy E&M groupers; localized high-frequency clusters by county and plan, empowering case managers to redirect Medicaid and Marketplace members from emergency facilities to outpatient services."
+            },
+            theme6: {
+                sql: `
+WITH pdBase AS (
+    SELECT 
+        member_id, part_state, admit_date, original_discharge_date,
+        CASE 
+            WHEN facility_type IN ('SNF', 'REHAB', 'LTAC', 'HOSPICE') THEN DATE_SUB(admit_date, 1)
+            ELSE original_discharge_date 
+        END AS triggerEventDate
+    FROM sourcedata_db.cca_CM_Enterprise_TOC_PostDischargeDetails
+),
+weekly_exploded AS (
+    SELECT 
+        b.member_id,
+        b.part_state,
+        explode(sequence(b.triggerEventDate, DATE_ADD(b.triggerEventDate, 30), interval 1 week)) AS calendar_week_start
+    FROM pdBase b
+)
+SELECT 
+    member_id, calendar_week_start,
+    ROW_NUMBER() OVER(PARTITION BY member_id, calendar_week_start ORDER BY calendar_week_start DESC) AS rank
+FROM weekly_exploded;`,
+                bullet: "Engineered the Care Management (CM) Outcomes Fact Pipeline to track Transitions of Care (TOC) indicators; authored a conditional facility-normalization model for atypical discharges (SNF, Rehab, LTAC) and designed a PySpark-based weekly explosion engine to expand member-timeline spans into longitudinal ISO-calendar grains."
+            }
+        };
+
+        // Function to handle switching tabs
+        function switchTab(themeId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(element => {
+                element.classList.add('hidden');
+            });
+            // Show selected tab content
+            document.getElementById('content-' + themeId).classList.remove('hidden');
+
+            // Reset navigation button highlights
+            document.querySelectorAll('#project-nav button').forEach(button => {
+                button.className = "w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center justify-between text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 border border-transparent";
+                const dot = button.querySelector('span.rounded-full');
+                if (dot) {
+                    dot.className = "h-2 w-2 rounded-full bg-slate-600";
+                }
+            });
+
+            // Highlight current button
+            const activeBtn = document.getElementById('btn-' + themeId);
+            activeBtn.className = "w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center justify-between bg-gradient-to-r from-cyan-950/60 to-slate-900 border border-cyan-800/40 text-cyan-300";
+            const activeDot = activeBtn.querySelector('span.rounded-full');
+            if (activeDot) {
+                activeDot.className = "h-2 w-2 rounded-full bg-cyan-400 animate-pulse-slow";
+            }
+
+            // Load logic sandbox and resume bullet point corresponding to chosen theme
+            loadSandboxData(themeId);
+        }
+
+        // Load SQL and Bullet Point corresponding to chosen tab
+        function loadSandboxData(themeId) {
+            const data = projectData[themeId];
+            document.getElementById('sql-display-code').textContent = data.sql;
+            document.getElementById('resume-bullet-text').textContent = data.bullet;
+            currentSelectedTheme = themeId;
+        }
+
+        let currentSelectedTheme = 'theme1';
+
+        // Interactive CCW Rule Inspector Helper (動態更新顯示內容)
+        function showCcwDetail(type) {
+            const box = document.getElementById('ccw-criteria-box');
+            if (type === 'A') {
+                box.innerHTML = `<strong>Criteria Type A Details:</strong><br>
+• <strong>Clinical Coverage:</strong> Applied to most Physical Health conditions (e.g. Asthma, HF, CKD, Diabetes).<br>
+• <strong>Matching Logic:</strong> Requires 1 IP (Inpatient), SNF (Skilled Nursing), or HHA (Home Health) claim OR 2 HOP (Hospital Outpatient) or Carrier claims within a 2-year lookback period.<br>
+• <strong>Clean Pattern:</strong> listDxASTH = _listDxASTH.replace(',', '').replace('.', '').split() <span class="text-emerald-400">// Strips periods for matching</span>`;
+            } else if (type === 'B') {
+                box.innerHTML = `<strong>Criteria Type B Details:</strong><br>
+• <strong>Clinical Coverage:</strong> Applied to MHSA conditions (ADHD, Anxiety, Depression, AUD, DUD).<br>
+• <strong>Matching Logic:</strong> Requires 1 IP claim OR 2 other non-drug claims of any service type within a 2-year lookback period.<br>
+• <strong>Exception (AUD/DUD):</strong> ICD-10-PCS procedure codes (HZ2-HZ9 series) bypass the standard threshold and qualify with only 1 claim.`;
+            } else if (type === 'F') {
+                box.innerHTML = `<strong>Criteria Type F & Special Rules:</strong><br>
+• <strong>OUD Composite (OUD1):</strong> OUD1 is a high-level flag derived from OUD2 (Dx/Proc), OUD3 (IP/ER poisoning/hospitalizations), or OUD4 (HCPCS G2067-G2075/NDCs Buprenorphine & Naltrexone).<br>
+• <strong>Sickle Cell Disease (SCD):</strong> Uses a conservative 5-year lookback and requires 3+ non-drug claims to mitigate coding anomalies.<br>
+• <strong>Cataract (CAT):</strong> Lowest threshold. Requires only 1 HOP/Carrier claim, 1-year lookback window.`;
+            }
+        }
+
+        // Clipboard Copy Helper (Handles restricted iframe restrictions safely)
+        function copyTextToClipboard(text) {
+            const tempTextArea = document.createElement("textarea");
+            tempTextArea.value = text;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            try {
+                document.execCommand('copy');
+                showToast("Successfully copied to your clipboard!");
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                showToast("Copy failed, please highlight manually.");
+            }
+            document.body.removeChild(tempTextArea);
+        }
+
+        // Copy SQL to clipboard
+        function copyCurrentSQL() {
+            const textToCopy = projectData[currentSelectedTheme].sql;
+            copyTextToClipboard(textToCopy);
+        }
+
+        // Copy Resume bullet point to clipboard
+        function copyResumeBullet() {
+            const textToCopy = projectData[currentSelectedTheme].bullet;
+            copyTextToClipboard(textToCopy);
+        }
+
+        // Custom UI Toast Alert
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.remove('opacity-0', 'translate-y-20');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-20');
+            }, 2500);
+        }
+
+        // Initiate App on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            switchTab('theme1');
+        });
+    </script>
+</body>
+</html>
+
